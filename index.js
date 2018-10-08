@@ -4,7 +4,7 @@ var express = require ('express');
 var app = express();
 var bodyparser = require('body-parser');
 var jwt = require('jsonwebtoken')
-
+var process = require('process')
 // middleware for tokenverify
 var tokenverify = require('./middleware/tokenverify')
 
@@ -15,7 +15,7 @@ app.use(bodyparser.json())
 
 //listening on port 2000
 
-app.listen(2000,()=>{console.log('listening')})
+app.listen(process.env.PORT,()=>{console.log('listening')})
 
 var {check} = require('express-validator/check')
 
