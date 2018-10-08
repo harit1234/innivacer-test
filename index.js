@@ -1,10 +1,11 @@
-//--------------modules-------------------------------------------------------------------//
+//--------------modules------------------------------------------------------------------------//
 
 var express = require ('express');
 var app = express();
 var bodyparser = require('body-parser');
 var jwt = require('jsonwebtoken')
 var process = require('process')
+
 // middleware for tokenverify
 var tokenverify = require('./middleware/tokenverify')
 
@@ -36,15 +37,17 @@ app.post('/login',[check('username').isLength({min:3})],(req,res)=>{
 
 // jsonpatch endpoint -------------------------------------------------------------------------------
 
-var jsonpatch = require('fast-json-patch')//module
-
-app.post('jsonpatch',tokenverify,(req,res)=>{
-    // seperating the patch and object
-    var patchToApply = req.body.jsonpatch;
-    var jsonDoc = req.body.jsondoc;
-    //applying patch and generating patched json
-    var changedDoc = jsonpatch.applyPatch(jsonDoc,patchToApply).newDocument; //new document after applying patch
-    res.json({changeddoc: changedDoc})
+var jsonpatch = require('fast-json-patch')
+app.post('/jsonpatch',(req,res)=>{
+    var jsondoc = req.body.jsondoc
+    var patch = req.body.jsonpatch
+    var arr = []
+    // var document = jsonpatch.applyPatch(jsondoc,patch).newDocument;
+    // res.send(document)
+    patch.forEach(element => {arr.push(JSON.parse(element))});
+    console.log(jsonpatch.validate(arr, jsondoc))
+    jsondoc = jsonpatch.applyPatch(arr, jsondoc).newDocument
+    res.json({jsondoc:jsondoc})
 })
 
 //---------thumbnail-generation route ------------------------------------------------------------
