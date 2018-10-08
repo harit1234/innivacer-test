@@ -15,7 +15,12 @@ app.use(bodyparser.json())
 
 //listening on port 2000
 
-app.listen(process.env.PORT,()=>{console.log('listening')})
+if (process.env.PORT){
+app.listen(process.env.PORT,()=>{console.log('listening ' + process.env.PORT)})
+}
+else{
+app.listen(process.env.PORT,()=>{console.log('listening ' + process.env.PORT)})
+}
 
 var {check} = require('express-validator/check')
 
