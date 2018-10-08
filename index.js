@@ -19,7 +19,7 @@ if (process.env.PORT){
 app.listen(process.env.PORT,()=>{console.log('listening ' + process.env.PORT)})
 }
 else{
-app.listen(process.env.PORT,()=>{console.log('listening ' + process.env.PORT)})
+app.listen(2000,()=>{console.log('listening ')})
 }
 
 var {check} = require('express-validator/check')
